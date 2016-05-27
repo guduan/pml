@@ -2,11 +2,19 @@ import pvs
 import units
 
 
+class DeviceCategories(object):
+    BPM = 0
+    DIPOLE = 1
+    QUAD = 2
+    SEXT = 3
+    DRIFT = 4
+
+
 class Element(object):
     """
-    An element corresponds to one physical device in the ring, which may
-    have more than one device.  Each device is available through
-    a field.
+    An element corresponds to one physical or virtual object in the ring,
+    which may have more than one device.  Each device is available through
+    a field on the element.
     """
     def __init__(self, s, length, name):
         self.s = s
@@ -19,11 +27,6 @@ class Element(object):
         self.virtual = False
 
         self._devices = {}
-
-    def set_live(self, live):
-        self.live = live
-        for device in self._devices:
-            device.set_live(live)
 
     def add_device(self, device):
         self._devices[device.field_name] = device
@@ -52,7 +55,10 @@ class Element(object):
 class Device(object):
     """
     A device corresponds to one value on one element, with readback and
-    possibly setpoint PVs.
+    possibly setpoint PVs.  This is controlled by PVs and may have both
+    hardware and physics units.
+
+    A device may be a member of one family.
     """
     def __init__(self, name, field_name):
         self.name = name
@@ -60,13 +66,11 @@ class Device(object):
         self.readback_pv = None
         self.setpoint_pv = None
         self.conv = units.NullConversion()
-        self.live = True
         self.category = None
 
     def get(self, physics=False):
-        # Should the live version set the model value? I think no
         hw_value = pvs.get_live(self.readback_pv)
         if physics:
-            return self.conv.to_physics(hw_value)
+            return self.conv.to_phys(hw_value)
         else:
             return hw_value
