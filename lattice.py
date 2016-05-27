@@ -6,21 +6,21 @@ class Lattice(object):
     """
 
     def __init__(self):
-        self.elements = []
+        self._elements = []
 
     def get_element(self, i):
-        return self.elements[i]
+        return self._elements[i]
 
     def get_elements(self, category=None):
         if category is None:
-            return self.elements
+            return self._elements
         else:
             elements = []
-            for element in self.elements:
+            for element in self._elements:
                 devices = element.get_devices(category)
                 if devices:
                     elements.append(element)
             return elements
 
     def append(self, element):
-        self.elements.append(element)
+        self._elements.append(element)
