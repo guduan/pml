@@ -17,6 +17,12 @@ class ElementTest(unittest.TestCase):
         self.el = element.Element(1, 2, 'name')
         self.el.add_device(self.dev)
 
+    def test_element_has_s_as_attribute(self):
+        print(self.el.s)
+        print(self.el.__dict__)
+        self.assertEqual(self.el.s, 1)
+        self.assertEqual(self.el.dev, 1)
+
     def test_element_has_dev_as_attribute(self):
         get_mock = mock.MagicMock()
         set_mock = mock.MagicMock()

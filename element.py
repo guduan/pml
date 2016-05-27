@@ -35,6 +35,11 @@ class Element(object):
             return [d for d in self._devices.values() if d.category == category]
 
     def __getattr__(self, name):
+        """
+        Return value from device if present.  Note that __getattr__ has low
+        priority so this will not be called if an instance variable has this
+        name.
+        """
         return self._devices[name].get()
 
     def __setattr__(self, name, value):
