@@ -1,0 +1,87 @@
+import pvs
+
+
+class Element(object):
+    """
+    An element corresponds to one physical device in the ring, which may
+    have more than one device.  Each device is available through
+    a field.
+    """
+    def __init__(self, s, length, name):
+        self.s = s
+        self.length = length
+        self.name = name
+
+        self.poly_a = (0, 0, 0, 0)
+        self.poly_b = (0, 0, 0, 0)
+        self.poly = (self.poly_a, self.poly_b)
+
+        self.cell = None
+        self.girder = None
+
+        self.virtual = False
+
+        self._devices = {}
+
+    def set_live(self, live):
+        self.live = live
+        for device in self._devices:
+            device.set_live(live)
+
+    def add_device(self, device, field):
+        device.element = self
+        self._devices[field] = device
+
+    def __getattr__(self, name):
+        return self._devices[name].get()
+
+    def __setattr__(self, name, value):
+        if '_devices' in self.__dict__ and name in self.__dict__['_devices']:
+            self.__dict__['_devices'][name].set(value)
+        else:
+            object.__setattr__(self, name, value)
+
+
+class Device(object):
+    """
+    A device corresponds to one value on one element, with readback and
+    possibly setpoint PVs.
+    """
+    def __init__(self, name):
+        self.name = name
+        self.element = None
+        self.phys_value = 0
+        self.phys_units = ''
+        self.hw_units = ''
+        self.readback_pv = None
+        self.setpoint_pv = None
+        self.conv = None
+        self.live = True
+        self.category = None
+
+    def set_live(self, live):
+        self.live = live
+
+    def get(self, physics=False):
+        # Should the live version set the model value? I think no
+        if self.live:
+            hw_value = pvs.get_live(self.readback_pv)
+            if physics:
+                return self.conv.to_physics(hw_value)
+            else:
+                return hw_value
+        else:
+            if physics:
+                return self.phys_value
+            else:
+                return self.conv.to_hw(self.phys_value)
+
+    @property
+    def s(self):
+        return self.element.s
+
+    @property
+    def length(self):
+        return self.element.length
+
+
