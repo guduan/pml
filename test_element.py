@@ -13,9 +13,9 @@ pvs.get_live = mock.MagicMock()
 class ElementTest(unittest.TestCase):
 
     def setUp(self):
-        self.dev = element.Device('dev')
+        self.dev = element.Device('dev', 'dev')
         self.el = element.Element(1, 2, 'name')
-        self.el.add_device(self.dev, 'dev')
+        self.el.add_device(self.dev)
 
     def test_element_has_dev_as_attribute(self):
         get_mock = mock.MagicMock()
@@ -32,7 +32,7 @@ class DeviceTest(unittest.TestCase):
 
     def setUp(self):
         self.el = element.Element(1, 2, 'name')
-        self.d = element.Device('dev')
+        self.d = element.Device('dev', 'dev')
         self.d.element = self.el
         self.d.readback_pv = 'rpv'
 

@@ -24,9 +24,9 @@ class Element(object):
         for device in self._devices:
             device.set_live(live)
 
-    def add_device(self, device, field):
+    def add_device(self, device):
         device.element = self
-        self._devices[field] = device
+        self._devices[device.field_name] = device
 
     def get_devices(self, category=None):
         if category is None:
@@ -49,8 +49,9 @@ class Device(object):
     A device corresponds to one value on one element, with readback and
     possibly setpoint PVs.
     """
-    def __init__(self, name):
+    def __init__(self, name, field_name):
         self.name = name
+        self.field_name = field_name
         self.element = None
         self.phys_units = ''
         self.hw_units = ''
