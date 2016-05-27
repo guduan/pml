@@ -12,10 +12,6 @@ class Element(object):
         self.length = length
         self.name = name
 
-        self.poly_a = (0, 0, 0, 0)
-        self.poly_b = (0, 0, 0, 0)
-        self.poly = (self.poly_a, self.poly_b)
-
         self.cell = None
         self.girder = None
 
@@ -50,7 +46,6 @@ class Device(object):
     def __init__(self, name):
         self.name = name
         self.element = None
-        self.phys_value = 0
         self.phys_units = ''
         self.hw_units = ''
         self.readback_pv = None
@@ -59,22 +54,13 @@ class Device(object):
         self.live = True
         self.category = None
 
-    def set_live(self, live):
-        self.live = live
-
     def get(self, physics=False):
         # Should the live version set the model value? I think no
-        if self.live:
-            hw_value = pvs.get_live(self.readback_pv)
-            if physics:
-                return self.conv.to_physics(hw_value)
-            else:
-                return hw_value
+        hw_value = pvs.get_live(self.readback_pv)
+        if physics:
+            return self.conv.to_physics(hw_value)
         else:
-            if physics:
-                return self.phys_value
-            else:
-                return self.conv.to_hw(self.phys_value)
+            return hw_value
 
     @property
     def s(self):
