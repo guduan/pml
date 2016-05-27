@@ -42,12 +42,6 @@ class DeviceTest(unittest.TestCase):
         self.d.element = self.el
         self.d.readback_pv = 'rpv'
 
-    def test_device_gets_s_from_element(self):
-        self.assertEqual(self.d.s, self.el.s)
-
-    def test_device_gets_length_from_element(self):
-        self.assertEqual(self.d.length, self.el.length)
-
     def test_if_live_calls_pvs_get_live(self):
         self.d.get()
         pvs.get_live.assert_called_with('rpv')

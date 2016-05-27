@@ -26,7 +26,6 @@ class Element(object):
             device.set_live(live)
 
     def add_device(self, device):
-        device.element = self
         self._devices[device.field_name] = device
 
     def get_devices(self, category=None):
@@ -58,7 +57,6 @@ class Device(object):
     def __init__(self, name, field_name):
         self.name = name
         self.field_name = field_name
-        self.element = None
         self.readback_pv = None
         self.setpoint_pv = None
         self.conv = units.NullConversion()
@@ -72,13 +70,3 @@ class Device(object):
             return self.conv.to_physics(hw_value)
         else:
             return hw_value
-
-    @property
-    def s(self):
-        return self.element.s
-
-    @property
-    def length(self):
-        return self.element.length
-
-
