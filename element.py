@@ -1,4 +1,5 @@
 import pvs
+import units
 
 
 class Element(object):
@@ -58,11 +59,9 @@ class Device(object):
         self.name = name
         self.field_name = field_name
         self.element = None
-        self.phys_units = ''
-        self.hw_units = ''
         self.readback_pv = None
         self.setpoint_pv = None
-        self.conv = None
+        self.conv = units.NullConversion()
         self.live = True
         self.category = None
 
