@@ -11,15 +11,15 @@ class Lattice(object):
     def get_element(self, i):
         return self.elements[i]
 
-    def get_elements(self, pattern=None):
-        if pattern is None:
+    def get_elements(self, category=None):
+        if category is None:
             return self.elements
         else:
             elements = []
             for element in self.elements:
-                for device in element.devices:
-                    if device.category == pattern:
-                        elements.append(element)
+                devices = element.get_devices(category)
+                if devices:
+                    elements.append(element)
             return elements
 
     def append(self, element):

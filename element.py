@@ -28,6 +28,12 @@ class Element(object):
         device.element = self
         self._devices[field] = device
 
+    def get_devices(self, category=None):
+        if category is None:
+            return self._devices.values()
+        else:
+            return [d for d in self._devices.values() if d.category == category]
+
     def __getattr__(self, name):
         return self._devices[name].get()
 

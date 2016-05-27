@@ -14,7 +14,7 @@ class TestLattice(unittest.TestCase):
         self.el1 = element.Element(2, 3, 'name2')
         self.dev0 = element.Device('dev_name')
         self.dev0.category = 'cat1'
-        self.el1.add_device(self.dev0)
+        self.el1.add_device(self.dev0, 'dev')
         self.lattice.append(self.el1)
 
     def test_get_elements_returns_empty_list_if_no_matches(self):
