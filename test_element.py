@@ -1,8 +1,4 @@
 
-import pkg_resources
-pkg_resources.require('cothread')
-pkg_resources.require('mock')
-
 import unittest
 import element
 import mock

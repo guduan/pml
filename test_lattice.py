@@ -1,6 +1,4 @@
 
-import pkg_resources
-pkg_resources.require('cothread')
 import unittest
 import lattice
 import element
