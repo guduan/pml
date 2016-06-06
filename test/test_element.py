@@ -39,10 +39,6 @@ class DeviceTest(unittest.TestCase):
         self.d.get()
         pvs.get_live.assert_called_with('rpv')
 
-    def test_if_not_live_does_not_call_pvs_get_live(self):
-        self.d.get()
-        pvs.get_live.assert_never_called()
-
 
 if __name__ == '__main__':
     unittest.main()
