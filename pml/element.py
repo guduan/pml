@@ -1,13 +1,13 @@
 import pvs
 import units
+import enum
 
 
-class DeviceCategories(object):
-    BPM = 0
+class ElementType(enum.Enum):
+    DRIFT = 0
     DIPOLE = 1
     QUAD = 2
     SEXT = 3
-    DRIFT = 4
 
 
 class Element(object):
@@ -16,10 +16,12 @@ class Element(object):
     which may have more than one device.  Each device is available through
     a field on the element.
     """
-    def __init__(self, s, length, name):
+    def __init__(self, s, length, name, element_type):
         self.s = s
         self.length = length
         self.name = name
+
+        self.element_type = ElementType[element_type]
 
         self.cell = None
         self.girder = None
