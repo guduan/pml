@@ -18,6 +18,10 @@ class TestLattice(unittest.TestCase):
     def test_lattice_len(self):
         self.assertEqual(len(self.lattice), 2)
 
+    def test_get_elements_returns_element_for_string_type(self):
+        els = self.lattice.get_elements('DRIFT')
+        self.assertEqual(els, [self.drift])
+
     def test_get_elements_returns_empty_list_if_no_matches(self):
         els = self.lattice.get_elements(category='empty_cat')
         self.assertEqual(els, [])
