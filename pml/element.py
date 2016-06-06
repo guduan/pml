@@ -28,7 +28,6 @@ class Element(object):
 
         self.virtual = False
 
-        self._groups = []
         self._devices = {}
 
     def __str__(self):
@@ -36,12 +35,6 @@ class Element(object):
 
     def add_device(self, device):
         self._devices[device.field_name] = device
-
-    def add_to_group(self, group):
-        self._groups.append(group)
-
-    def is_in_group(self, group):
-        return group in self._groups
 
     def get_devices(self, category=None):
         if category is None:
