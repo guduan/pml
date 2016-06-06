@@ -15,6 +15,9 @@ class TestLattice(unittest.TestCase):
         self.el1.add_device(self.dev0)
         self.lattice.append(self.el1)
 
+    def test_lattice_len(self):
+        self.assertEqual(len(self.lattice), 2)
+
     def test_get_elements_returns_empty_list_if_no_matches(self):
         els = self.lattice.get_elements(category='cat0')
         self.assertEqual(els, [])
