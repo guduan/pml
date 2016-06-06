@@ -10,7 +10,7 @@ class ElementTest(unittest.TestCase):
 
     def setUp(self):
         self.dev = element.Device('dev', 'dev')
-        self.el = element.Element(1, 2, 'name')
+        self.el = element.Element(1, 2, 'name', 'DRIFT')
         self.el.add_device(self.dev)
 
     def test_element_has_s_as_attribute(self):
@@ -30,7 +30,7 @@ class ElementTest(unittest.TestCase):
 class DeviceTest(unittest.TestCase):
 
     def setUp(self):
-        self.el = element.Element(1, 2, 'name')
+        self.el = element.Element(1, 2, 'name', 'DRIFT')
         self.d = element.Device('dev', 'dev')
         self.d.element = self.el
         self.d.readback_pv = 'rpv'
