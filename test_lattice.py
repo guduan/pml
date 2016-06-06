@@ -1,7 +1,7 @@
 
 import unittest
-import lattice
-import element
+from pml import lattice
+from pml import element
 
 class TestLattice(unittest.TestCase):
 

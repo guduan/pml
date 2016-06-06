@@ -1,8 +1,8 @@
 
 import unittest
-import element
 import mock
-import pvs
+from pml import element
+from pml import pvs
 pvs.get_live = mock.MagicMock()
 
 

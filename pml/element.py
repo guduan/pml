@@ -26,10 +26,20 @@ class Element(object):
 
         self.virtual = False
 
+        self._groups = []
         self._devices = {}
+
+    def __str__(self):
+        return 'Element {} at s={} with {} devices'.format(self.name, self.s, len(self._devices))
 
     def add_device(self, device):
         self._devices[device.field_name] = device
+
+    def add_to_group(self, group):
+        self._groups.append(group)
+
+    def is_in_group(self, group):
+        return group in self._groups
 
     def get_devices(self, category=None):
         if category is None:
@@ -60,11 +70,11 @@ class Device(object):
 
     A device may be a member of one family.
     """
-    def __init__(self, name, field_name):
+    def __init__(self, name, field_name, rb=None, sp=None):
         self.name = name
         self.field_name = field_name
-        self.readback_pv = None
-        self.setpoint_pv = None
+        self.readback_pv = rb
+        self.setpoint_pv = sp
         self.conv = units.NullConversion()
         self.category = None
 
@@ -74,3 +84,8 @@ class Device(object):
             return self.conv.to_phys(hw_value)
         else:
             return hw_value
+
+    def set(self, value, physics=False):
+        if physics:
+            value = self.conv.to_hw(value)
+        pvs.set_live(self.setpoint_pv, value)
