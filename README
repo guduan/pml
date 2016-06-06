@@ -1,6 +1,9 @@
 Python Middle Layer
 ===================
 
+[![Build Status](https://travis-ci.org/willrogers/pml.svg?branch=master)](https://travis-ci.org/willrogers/pml)
+[![Coverage Status](https://coveralls.io/repos/github/willrogers/pml/badge.svg?branch=master)](https://coveralls.io/github/willrogers/pml?branch=master)
+
 This a prototype Python interface to the Diamond accelerator.  It borrows
 heavily from Matlab Middle Layer and NSLS-II's aphla python module.
 
