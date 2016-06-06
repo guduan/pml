@@ -6,8 +6,9 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 
-script: nosetests
+script: nosetests --with-coverage --cover-package=pml
 
-after_script:
+after_success:
   - coveralls
