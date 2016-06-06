@@ -1,3 +1,4 @@
+import six
 from pml import element
 
 class Lattice(object):
@@ -21,7 +22,7 @@ class Lattice(object):
         if category is None and element_type is None:
             return self._elements
         elif element_type is not None:
-            if isinstance(element_type, basestring):
+            if isinstance(element_type, six.string_types):
                 element_type = element.ElementType[element_type]
             elements = []
             for el in self._elements:
