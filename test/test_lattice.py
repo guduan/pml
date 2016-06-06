@@ -16,11 +16,11 @@ class TestLattice(unittest.TestCase):
         self.lattice.append(self.el1)
 
     def test_get_elements_returns_empty_list_if_no_matches(self):
-        els = self.lattice.get_elements('cat0')
+        els = self.lattice.get_elements(category='cat0')
         self.assertEqual(els, [])
 
     def test_get_elements_returns_matching_element(self):
-        els = self.lattice.get_elements('cat1')
+        els = self.lattice.get_elements(category='cat1')
         self.assertEqual(els, [self.el1])
 
     def test_get_elements_returns_all_elements_if_no_argument(self):
