@@ -1,4 +1,4 @@
-import element
+from pml import element
 
 class Lattice(object):
     """
