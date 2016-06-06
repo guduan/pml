@@ -5,3 +5,6 @@
 # vim temporary files
 *.swp
 *.swo
+
+# coverage reports
+.coverage
