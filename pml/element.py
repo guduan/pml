@@ -70,7 +70,7 @@ class Device(object):
         self.field_name = field_name
         self.readback_pv = rb
         self.setpoint_pv = sp
-        self.conv = units.NullConversion()
+        self.conv = units.Conversion()
         self.category = None
 
     def get(self, physics=False):
