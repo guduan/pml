@@ -80,7 +80,7 @@ class Device(object):
         else:
             return hw_value
 
-    def set(self, value, physics=False):
+    def put(self, value, physics=False):
         if physics:
             value = self.conv.to_hw(value)
-        pvs.set_live(self.setpoint_pv, value)
+        pvs.put_live(self.setpoint_pv, value)
