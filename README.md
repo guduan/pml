@@ -37,3 +37,9 @@ Questions:
 
 * Should elements store their own location?
 * Does a family require any information itself?
+* What happens when an element changes more than one physics parameter?
+* What happens if an element has two devices that change the same parameter?
+ * The dipole plus trim in the DDBA cells is an example
+* What happens if element PVs are stored in a waveform (e.g. BPMs)?
+* What happens if multiple elements share a device (e.g. big dipole power supply)?
+* To get all magnet families in MML, use findmemberof('Magnet')
