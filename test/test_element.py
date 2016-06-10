@@ -28,15 +28,15 @@ class ElementTest(unittest.TestCase):
 
     def test_get_devices_with_no_category_gets_all(self):
         devs = self.el.get_devices()
-        self.assertListEqual(devs, [self.dev])
+        self.assertSequenceEqual(list(devs), [self.dev])
 
     def test_get_devices_with_wrong_category_gets_none(self):
         devs = self.el.get_devices('dummy')
-        self.assertListEqual(devs, [])
+        self.assertSequenceEqual(list(devs), [])
 
     def test_get_devices_with_right_category_gets_one(self):
         devs = self.el.get_devices('DRIFT')
-        self.assertListEqual(devs, [self.dev])
+        self.assertSequenceEqual(list(devs), [self.dev])
 
 
 class DeviceTest(unittest.TestCase):
