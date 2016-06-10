@@ -70,7 +70,7 @@ class Device(object):
         self.field_name = field_name
         self.readback_pv = rb
         self.setpoint_pv = sp
-        self.conv = units.NullConversion()
+        self.conv = units.Conversion()
         self.category = None
 
     def get(self, physics=False):
@@ -80,7 +80,7 @@ class Device(object):
         else:
             return hw_value
 
-    def set(self, value, physics=False):
+    def put(self, value, physics=False):
         if physics:
             value = self.conv.to_hw(value)
-        pvs.set_live(self.setpoint_pv, value)
+        pvs.put_live(self.setpoint_pv, value)

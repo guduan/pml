@@ -1,4 +1,7 @@
 
 
 def get_live(pv):
-    return None
+    pass
+
+def put_live(pv, value):
+    pass
