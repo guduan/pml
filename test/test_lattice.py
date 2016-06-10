@@ -11,7 +11,7 @@ class TestLattice(unittest.TestCase):
         self.lattice.append(self.drift)
         self.quad = element.Element(2, 3, 'name2', 'QUAD')
         self.dev0 = element.Device('dev_name', 'dev')
-        self.dev0.category = 'quad_cat'
+        self.dev0.add_to_family('dev_family')
         self.quad.add_device(self.dev0)
         self.lattice.append(self.quad)
 
@@ -23,11 +23,11 @@ class TestLattice(unittest.TestCase):
         self.assertEqual(els, [self.drift])
 
     def test_get_elements_returns_empty_list_if_no_matches(self):
-        els = self.lattice.get_elements(category='empty_cat')
+        els = self.lattice.get_elements(family='empty_family')
         self.assertEqual(els, [])
 
     def test_get_elements_returns_matching_element(self):
-        els = self.lattice.get_elements(category='quad_cat')
+        els = self.lattice.get_elements(family='dev_family')
         self.assertEqual(els, [self.quad])
 
     def test_get_elements_returns_all_elements_if_no_argument(self):

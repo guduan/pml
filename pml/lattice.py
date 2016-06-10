@@ -1,5 +1,3 @@
-import six
-from pml import element
 
 class Lattice(object):
     """
@@ -18,21 +16,19 @@ class Lattice(object):
     def get_element(self, i):
         return self._elements[i]
 
-    def get_elements(self, element_type=None, category=None):
-        if category is None and element_type is None:
+    def get_elements(self, element_type=None, family=None):
+        if family is None and element_type is None:
             return self._elements
         elif element_type is not None:
-            if isinstance(element_type, six.string_types):
-                element_type = element.ElementType[element_type]
             elements = []
             for el in self._elements:
-                if el.element_type == element_type:
+                if el.is_type(element_type):
                     elements.append(el)
             return elements
         else:
             elements = []
             for el in self._elements:
-                devices = el.get_devices(category)
+                devices = el.get_devices(family)
                 if devices:
                     elements.append(el)
             return elements
