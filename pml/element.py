@@ -33,6 +33,17 @@ class Element(object):
     def __str__(self):
         return 'Element {} at s={} with {} devices'.format(self.name, self.s, len(self._devices))
 
+    def is_type(self, element_type):
+        """
+        Return True if either the string or enum matching the element type
+        is provided.
+        """
+        try:
+            element_type = ElementType[element_type]
+        except KeyError:
+            pass
+        return element_type == self.element_type
+
     def add_device(self, device):
         self._devices[device.field_name] = device
 

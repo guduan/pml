@@ -1,4 +1,3 @@
-
 import unittest
 import mock
 from pml import element
@@ -8,7 +7,7 @@ from pml import pvs
 class ElementTest(unittest.TestCase):
 
     def setUp(self):
-        self.dev = element.Device('dev', 'dev')
+        self.dev = element.Device('test_dev', 'dev')
         self.dev.category = 'DRIFT'
         self.el = element.Element(1, 2, 'name', 'DRIFT')
         self.el.add_device(self.dev)
@@ -16,13 +15,24 @@ class ElementTest(unittest.TestCase):
     def test_element_has_s_as_attribute(self):
         self.assertEqual(self.el.s, 1)
 
+    def test_element_is_type(self):
+        self.assertTrue(self.el.is_type('DRIFT'))
+        self.assertTrue(self.el.is_type(element.ElementType.DRIFT))
+        self.assertFalse(self.el.is_type('DUMMY'))
+        self.assertFalse(self.el.is_type(element.ElementType.SEXT))
+
     def test_element_has_dev_as_attribute(self):
-        get_mock = mock.MagicMock()
+        dummy_value = 3
+        # set up mocks
+        get_mock = mock.MagicMock(return_value=dummy_value)
         set_mock = mock.MagicMock()
         self.dev.get = get_mock
         self.dev.set = set_mock
-        self.el.dev
+        # retrieve attribute
+        fetched_value = self.el.dev
         get_mock.assert_called_with()
+        self.assertEqual(dummy_value, fetched_value)
+        # set attribute
         self.el.dev = 1
         set_mock.assert_called_with(1)
 
