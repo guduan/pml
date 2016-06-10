@@ -47,11 +47,11 @@ class Element(object):
     def add_device(self, device):
         self._devices[device.field_name] = device
 
-    def get_devices(self, category=None):
-        if category is None:
+    def get_devices(self, family=None):
+        if family is None:
             return self._devices.values()
         else:
-            return [d for d in self._devices.values() if d.category == category]
+            return [d for d in self._devices.values() if d.is_in_family(family)]
 
     def __getattr__(self, name):
         """
@@ -74,7 +74,7 @@ class Device(object):
     possibly setpoint PVs.  This is controlled by PVs and may have both
     hardware and physics units.
 
-    A device may be a member of one family.
+    A device may be a member of zero or more families.
     """
     def __init__(self, name, field_name, rb=None, sp=None):
         self.name = name
@@ -82,7 +82,13 @@ class Device(object):
         self.readback_pv = rb
         self.setpoint_pv = sp
         self.conv = units.Conversion()
-        self.category = None
+        self._families = set()
+
+    def add_to_family(self, family):
+        self._families.add(family)
+
+    def is_in_family(self, family):
+        return family in self._families
 
     def get(self, physics=False):
         hw_value = pvs.get_live(self.readback_pv)

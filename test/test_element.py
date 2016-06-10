@@ -9,6 +9,7 @@ class ElementTest(unittest.TestCase):
     def setUp(self):
         self.dev = element.Device('test_dev', 'dev')
         self.dev.category = 'DRIFT'
+        self.dev.add_to_family('dev_family')
         self.el = element.Element(1, 2, 'name', 'DRIFT')
         self.el.add_device(self.dev)
 
@@ -44,8 +45,8 @@ class ElementTest(unittest.TestCase):
         devs = self.el.get_devices('dummy')
         self.assertSequenceEqual(list(devs), [])
 
-    def test_get_devices_with_right_category_gets_one(self):
-        devs = self.el.get_devices('DRIFT')
+    def test_get_devices_with_correct_family_returns_matching_device(self):
+        devs = self.el.get_devices('dev_family')
         self.assertSequenceEqual(list(devs), [self.dev])
 
 
@@ -58,6 +59,7 @@ class DeviceTest(unittest.TestCase):
         pvs.put_live = self.mock_put
         self.el = element.Element(1, 2, 'name', 'DRIFT')
         self.d = element.Device('dev', 'dev')
+        self.d.add_to_family('dev_family')
         self.d.element = self.el
         self.d.readback_pv = 'rpv'
         self.d.setpoint_pv = 'spv'
@@ -69,6 +71,10 @@ class DeviceTest(unittest.TestCase):
     def test_put_calls_pvs_put_live(self):
         self.d.put(1)
         self.mock_put.assert_called_with('spv', 1)
+
+    def test_is_in_family(self):
+        self.assertTrue(self.d.is_in_family('dev_family'))
+        self.assertFalse(self.d.is_in_family('dummy_family'))
 
 if __name__ == '__main__':
     unittest.main()

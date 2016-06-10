@@ -16,8 +16,8 @@ class Lattice(object):
     def get_element(self, i):
         return self._elements[i]
 
-    def get_elements(self, element_type=None, category=None):
-        if category is None and element_type is None:
+    def get_elements(self, element_type=None, family=None):
+        if family is None and element_type is None:
             return self._elements
         elif element_type is not None:
             elements = []
@@ -28,7 +28,7 @@ class Lattice(object):
         else:
             elements = []
             for el in self._elements:
-                devices = el.get_devices(category)
+                devices = el.get_devices(family)
                 if devices:
                     elements.append(el)
             return elements
